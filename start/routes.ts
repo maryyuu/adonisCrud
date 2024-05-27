@@ -8,6 +8,6 @@
 */
 
 import router from '@adonisjs/core/services/router'
-const get = ()=> import('#controllers/animales_resources_controller')
+const animales = ()=> import('#controllers/animales_resources_controller')
 
-router.resource('/get', get)
+router.resource('/animales', animales)
