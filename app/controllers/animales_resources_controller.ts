@@ -1,52 +1,61 @@
 
 import type { HttpContext } from '@adonisjs/core/http'
-import { animales } from "#services/animales_servicio_service"
-import { Animal } from '#models/animales_models';
-const funcionGet = (Array:any[], params:any) =>{
-  let id = parseInt(params.id);
+//import { animales } from "#services/animales_servicio_service"
+//import { Animal } from '#models/animales_models';
+import  Users_service  from '#services/animales_servicio_service';
+import User from '#models/user';
 
-  for(let i = 0; i <=Array.length; i++) {
-    if(Array[i] === id){
-        return Array[i]
-    }else if(Array[i] != id)  {
-      return 'NO EXISTE'
-    }
-   }
-  }
+import { inject } from '@adonisjs/core';
 
-const funcionDelete= (Array:any[], params:any)=>{
-  const index = funcionGet(Array, params)
-  if(index != null){
-  Array.splice(index,1)
-    return index + 'Se agrego Correctamente'
-  }
-  return 'NO EXISTE'
-}
+// const funcionGet = (Array:any[], params:any) =>{
+//   let id = parseInt(params.id);
 
-const funcionPost= ( peticion:any, animales:any[]) =>{
-  if( animales.push(peticion.body())){
-  return 'Agregado'
-  }
-  return 'No se pudo agregar'
+//   for(let i = 0; i <=Array.length; i++) {
+//     if(Array[i] === id){
+//         return Array[i]
+//     }else if(Array[i] != id)  {
+//       return 'NO EXISTE'
+//     }
+//    }
+//   }
+
+// const funcionDelete= (Array:any[], params:any)=>{
+//   const index = funcionGet(Array, params)
+//   if(index != null){
+//   Array.splice(index,1)
+//     return index + 'Se agrego Correctamente'
+//   }
+//   return 'NO EXISTE'
+// }
+
+// const funcionPost= ( peticion:any, Users:any) =>{
+//   if( 
+//     Users.push(peticion.body())){
+//   return 'Agregado'
+//   }
+//   return 'No se pudo agregar'
 
 
-}
+// }
 
-const funcionUpdateById= (Array:any[], peticion:any, params:any) =>{
-  const index = funcionGet(Array,params );
-  if(index != null){
-    Array.splice(index ,1 , peticion.body())
-    return 'Se actualizo exitosamente'
-  }else{
-    return 'No se pudo Actualizar el id no existe'
-  }
-}
+// const funcionUpdateById= (Array:any[], peticion:any, params:any) =>{
+//   const index = funcionGet(Array,params );
+//   if(index != null){
+//     Array.splice(index ,1 , peticion.body())
+//     return 'Se actualizo exitosamente'
+//   }else{
+//     return 'No se pudo Actualizar el id no existe'
+//   }
+// }
 export default class AnimalesResourcesController {
   /**
    * Display a list of resource
    */
-  async index(ctx: HttpContext) {
-    return animales
+  @inject()
+  async index(ctx: HttpContext, user:Users_service) {
+    //return Users
+    let users = user.all()
+    return users
   }
 
   /**
@@ -59,8 +68,14 @@ export default class AnimalesResourcesController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) {
-    funcionPost(request, animales );
+ // async store({ request }: HttpContext) {
+  @inject()
+    async store(ctx:HttpContext, usuario: Users_service) {
+    const data = ctx.request.body()
+    console.log(data)
+//    const post = await
+    return usuario.guardarUser(data)
+
   }
 
   /**
@@ -68,7 +83,7 @@ export default class AnimalesResourcesController {
    */
   async show({ params }: HttpContext) {
 
-   return funcionGet(animales, params)
+  // return funcionGet(animales, params)
   }
 
   /**
@@ -81,13 +96,13 @@ export default class AnimalesResourcesController {
    */
   async update({ params, request }: HttpContext)
   {
-    funcionUpdateById(animales, request, params)
+    //funcionUpdateById(animales, request, params)
   }
 
   /**
    * Delete record
    */
   async destroy({ params }: HttpContext) {
-    funcionDelete(animales,params)
+    //funcionDelete(animales,params)
   }
 }
