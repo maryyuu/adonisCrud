@@ -18,7 +18,6 @@ export default class Animales extends BaseModel{
   declare extincion: string
 
 
-
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

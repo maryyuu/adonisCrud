@@ -8,6 +8,8 @@
 */
 
 import router from '@adonisjs/core/services/router'
-const animales = ()=> import('#controllers/animales_resources_controller')
+const userController = () => import('#controllers/usurs_controller')
 
-router.resource('/animales', animales)
+
+router.post("users",[userController,'store']);
+router.get("users",[userController,'index']);
