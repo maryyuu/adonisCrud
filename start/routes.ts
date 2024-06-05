@@ -13,3 +13,4 @@ const userController = () => import('#controllers/usurs_controller')
 
 router.post("users",[userController,'store']);
 router.get("users",[userController,'index']);
+router.post("SingIn",[userController, 'SingIn'])

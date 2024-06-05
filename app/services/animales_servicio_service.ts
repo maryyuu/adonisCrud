@@ -31,7 +31,11 @@ export default class Users{
 
     }
     async mostrarAnimales(){
-       return User;
+       return await User.all();
+    }
+    
+    async mostarIdAnimales(data:any){
+        
     }
 }
 //import {Animal }from '#models/animale.ts'
