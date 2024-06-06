@@ -27,15 +27,49 @@ export default class Users{
         user.email =data.email
         user.password =data.password
 
-        await user.save()
+        if(user){
+          return  await user.save()
+        }else{
+          return {result : "No se logro guardar"}
+        }
+
 
     }
     async mostrarAnimales(){
        return await User.all();
     }
-    
+
     async mostarIdAnimales(data:any){
-        
+       let idUser= await User.find(data.id);
+       if(idUser){
+        return idUser
+       }else{
+        return {result : "No existe "}
+       }
+  }
+
+
+    async deleteAnimales(data:any){
+     let userdelete = await User.find(data.id)
+     if(userdelete){
+      await userdelete.delete()
+      return {result: "Eliminado correctamente"}
+     }else{
+      return{result: "No existe elemento"}
+     }
+    }
+
+    async actulizarUser(data:any){
+      let actulizar = await User.find(data.id);
+      if(actulizar){
+        actulizar.fullName = data.fullName;
+        actulizar.email = data.email;
+        actulizar.password = data.password;
+        await actulizar.save();
+        return {result : "Actualizado con exitoo"}
+      }else{
+        return{return : "NO EXISTE"}
+      }
     }
 }
 //import {Animal }from '#models/animale.ts'

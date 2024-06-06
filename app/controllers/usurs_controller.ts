@@ -17,12 +17,31 @@ export default class UsursController {
         return user_service.guardarUser(data)
     }
 
+    @inject()
+    async show({ params }: HttpContext, user_service: Users_service){
+      let userById = user_service.mostarIdAnimales(params)
+      return userById;
+    }
+
+    @inject()
+    async destory({params}: HttpContext, user_service: Users_service){
+      let deleteById = user_service.deleteAnimales(params);
+      return deleteById;
+    }
+
+    @inject()
+    async update({params}: HttpContext, user_service: Users_service){
+
+      return await user_service.actulizarUser(params);
+    }
+
+
     async SingIn({request, response} : HttpContext){
         const {email/* datos del Front DE LA PETICION*/ , password} = request.only([/* De la base de datos */'email', 'password'])
         // forma dos
         //const credenciales = request.only(['email', 'password'])
         //credenciles.emial
-    
+
         const user = await User.findBy('email', email)//Primero el email para comprobar si existe el man
         console.log(user);
         if(!user){//null
